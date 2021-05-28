@@ -8,7 +8,8 @@ import datetime
 import pytz
 import math
 import requests
-    
+# list of symbols - https://api.binance.com/api/v3/ticker/price
+
 def fetch_ohlc(symbol: str) -> List[Tuple[float, ...]]:
     res = requests.get(
         "https://api.binance.com/api/v3/klines", params={"symbol": symbol.upper(), "interval": "1h", "limit": 25})
