@@ -35,8 +35,10 @@ class buttonThread (threading.Thread):
  #       global selected_symbol_index
         while 1:
             if right_button.is_pressed:
-                globals.selected_symbol_index += 1
-                print(globals.symbols[globals.selected_symbol_index])
+                if (globals.selected_symbol_index + 1 < len(globals.symbols)):
+                    globals.selected_symbol_index += 1
+                else:
+                    globals.selected_symbol_index = 0
                 price, diff, ohlc = crypto_utils.fetch_crypto_data(globals.symbols_to_ticker[globals.symbols[globals.selected_symbol_index]])
                 draw = ImageDraw.Draw(img)
                 draw.rectangle((0, 0, lcd.width, lcd.height), fill=(0, 0, 0, 0))
@@ -56,9 +58,10 @@ class buttonThread (threading.Thread):
                 crypto_utils.render_ohlc_data(ohlc, draw)
                 lcd.LCD_ShowImage(img)
             if left_button.is_pressed: 
-                print("right_Button is pressed")
-                globals.selected_symbol_index -= 1
-                print(globals.symbols[globals.selected_symbol_index])
+                if (globals.selected_symbol_index > 0):
+                    globals.selected_symbol_index -= 1
+                else:
+                    globals.selected_symbol_index = len(globals.symbols) - 1
                 price, diff, ohlc = crypto_utils.fetch_crypto_data(globals.symbols_to_ticker[globals.symbols[globals.selected_symbol_index]])
                 draw = ImageDraw.Draw(img)
                 draw.rectangle((0, 0, lcd.width, lcd.height), fill=(0, 0, 0, 0))
